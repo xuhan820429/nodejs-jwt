@@ -2,16 +2,20 @@
 
 const daoService = require('./dao/daoservice')
 const express = require('express')
-const bodyparser = require('body-parser')
+const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 const authRouter = require('./routes/authRoute')
+const cookieRouter = require('./routes/cookieRoute')
     //creae express app
 const app = express()
 
 
 //middleware bodyparser
-app.use(bodyparser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 //middleware static file 
 app.use(express.static("public"))
+
+app.use(cookieParser())
 
 //setup view engine
 app.set('view engine', 'ejs')
@@ -32,3 +36,4 @@ app.get('/smoothies', (req, res) => {
 
 
 app.use(authRouter)
+app.use(cookieRouter)
