@@ -1,5 +1,6 @@
 <%- include('partials/header'); -%>
 
+
     <div class="row">
         <div class="float-left">
             <form id="signupForm">
@@ -17,10 +18,21 @@
     </div>
 
     <script>
+        function showError(err) {
+            let errorAlertElement = document.querySelector("#error_alert")
+            if (err) {
+                errorAlertElement.innerHTML = `<p>${err}</p>`
+                errorAlertElement.style.display = "block"
+            } else {
+                errorAlertElement.innerHTML = ""
+                errorAlertElement.style.display = "none"
+            }
+        }
         let form = document.querySelector("#signupForm")
         form.addEventListener("submit", async(event) => {
             try {
                 event.preventDefault()
+                showError(null)
                 let user = {
                     email: form.email.value,
                     password: form.password.value
@@ -32,8 +44,15 @@
                     },
                     body: JSON.stringify(user)
                 })
+
                 let data = await resp.json()
-                console.log(data)
+
+                if (resp.status == 400) {
+                    showError(data.error)
+                } else {
+                    location.assign("/")
+                }
+
             } catch (err) {
                 console.log(err)
             }

@@ -35,9 +35,16 @@
                     },
                     body: JSON.stringify(user)
                 })
-                let data = await resp.json()
-                console.log(data)
+
+                if (resp.status == 200) {
+                    let data = await resp.json()
+                    cosole.log('login---------------')
+                    console.log(data)
+                } else {
+                    console.log('err--------------')
+                }
             } catch (err) {
+
                 console.log(err)
             }
         })

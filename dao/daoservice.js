@@ -1,5 +1,6 @@
 const sequelize = require('./sequelizeconfig')
 const bcrypt = require('bcrypt')
+const { v4: uuidv4 } = require('uuid');
 const { QueryTypes } = require('sequelize')
 
 class DaoService {
@@ -18,25 +19,31 @@ class DaoService {
             let data = await sequelize.query(QUERY, { type: QueryTypes.SELECT })
             return data
         } catch (err) {
-            console.log(err)
+            throw err
         }
     }
 
     async createUser(body) {
         try {
             let { email, password } = body
+            let id = uuidv4()
             password = this.hashPassword(password)
-            let QUERY = "REPLACE INTO users VALUES (:email, :password)"
+            let QUERY = "INSERT INTO users VALUES (:id, :email, :password)"
             await sequelize.query(QUERY, {
                 replacements: {
+                    id,
                     email,
                     password
                 }
             })
-            return body
+            return {
+                id,
+                email
+            }
 
         } catch (err) {
-            console.log(err)
+            console.log('dao---------------------------')
+            throw err
         }
     }
 }
