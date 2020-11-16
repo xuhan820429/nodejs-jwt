@@ -28,7 +28,7 @@
                     password: form.password.value
                 }
                 console.log(user)
-                let resp = await fetch("http://localhost:3000/login", {
+                let resp = await fetch("/login", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
