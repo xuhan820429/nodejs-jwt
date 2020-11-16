@@ -1,18 +1,29 @@
 /*Setups*/
 
-const daoService = require('./dao/daoservice')
+//import express 
 const express = require('express')
+
+//import the body parser middleware
 const bodyParser = require('body-parser')
+
+//import the cookie parser middleware
 const cookieParser = require('cookie-parser')
+
+//user defined route
 const authRouter = require('./routes/authRoute')
 const cookieRouter = require('./routes/cookieRoute')
-    //creae express app
+
+//dao service
+const daoService = require('./dao/daoservice')
+
+//creae express app
 const app = express()
 
 
 //middleware bodyparser
-app.use(bodyParser.urlencoded({ extended: true }));
-//middleware static file 
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json())
+    //middleware static file 
 app.use(express.static("public"))
 
 app.use(cookieParser())

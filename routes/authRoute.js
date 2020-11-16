@@ -18,7 +18,7 @@ router.post('/login', (req, res) => {
 
 router.post('/signup', async(req, res) => {
     try {
-        let response = await daoService.createUser(req.body.user)
+        let response = await daoService.createUser(req.body)
         res.send(response)
     } catch (err) {
 
