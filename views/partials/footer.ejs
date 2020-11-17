@@ -8,7 +8,7 @@
     function showError(err) {
         let errorAlertElement = document.querySelector("#error_alert")
         if (err) {
-            errorAlertElement.innerHTML = `<p>${err}</p>`
+            errorAlertElement.innerHTML = `<p>${err.name} : ${err.msg}</p>`
             errorAlertElement.style.display = "block"
         } else {
             errorAlertElement.innerHTML = ""

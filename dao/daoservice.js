@@ -1,20 +1,11 @@
 const sequelize = require('./sequelizeconfig')
-const bcrypt = require('bcrypt')
+const passwordService = require('./../service/passwordService')
+
 const { v4: uuidv4 } = require('uuid');
 const { QueryTypes } = require('sequelize')
 
 class DaoService {
     constructor() {}
-
-    async hashPassword(password) {
-        let salt = await bcrypt.genSalt()
-        let newPass = await bcrypt.hash(password, salt)
-        return newPass
-    }
-
-    async comparePassword(originPass, encryptedPass) {
-        return await bcrypt.compare(originPass, encryptedPass)
-    }
 
 
     async getUser(body) {
@@ -28,10 +19,8 @@ class DaoService {
                 }
             })
             users = Array.from(users)
-            console.log(users)
             if (users.length == 1) {
-                let ifMatched = await this.comparePassword(password, users[0].password)
-                console.log(ifMatched)
+                let ifMatched = await passwordService.validatePassword(password, users[0].password)
                 if (ifMatched) {
                     return {
                         id: users[0].id,
@@ -57,7 +46,7 @@ class DaoService {
         try {
             let { email, password } = body
             let id = uuidv4()
-            password = await this.hashPassword(password)
+            password = await passwordService.genPasswordHash(password)
             let QUERY = "INSERT INTO users VALUES (:id, :email, :password)"
             await sequelize.query(QUERY, {
                 replacements: {
@@ -72,7 +61,6 @@ class DaoService {
             }
 
         } catch (err) {
-            console.log('333333333')
             throw err
         }
     }

@@ -38,7 +38,7 @@
                 let data = await resp.json()
 
                 if (resp.status == 400) {
-                    showError(data.error)
+                    showError(data)
                 } else {
                     location.assign("/")
                 }
