@@ -3,6 +3,21 @@
     <!-- Optional JavaScript -->
 </div>
 </div>
+
+<script>
+    function showError(err) {
+        let errorAlertElement = document.querySelector("#error_alert")
+        if (err) {
+            errorAlertElement.innerHTML = `<p>${err}</p>`
+            errorAlertElement.style.display = "block"
+        } else {
+            errorAlertElement.innerHTML = ""
+            errorAlertElement.style.display = "none"
+        }
+    }
+
+    showError(null)
+</script>
 </body>
 
 </html>

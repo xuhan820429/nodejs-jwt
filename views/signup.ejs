@@ -18,16 +18,6 @@
     </div>
 
     <script>
-        function showError(err) {
-            let errorAlertElement = document.querySelector("#error_alert")
-            if (err) {
-                errorAlertElement.innerHTML = `<p>${err}</p>`
-                errorAlertElement.style.display = "block"
-            } else {
-                errorAlertElement.innerHTML = ""
-                errorAlertElement.style.display = "none"
-            }
-        }
         let form = document.querySelector("#signupForm")
         form.addEventListener("submit", async(event) => {
             try {

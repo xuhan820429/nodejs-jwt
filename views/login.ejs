@@ -23,6 +23,7 @@
         form.addEventListener("submit", async(event) => {
             try {
                 event.preventDefault()
+                showError(null)
                 let user = {
                     email: form.email.value,
                     password: form.password.value
@@ -35,16 +36,14 @@
                     },
                     body: JSON.stringify(user)
                 })
+                let data = await resp.json()
 
-                if (resp.status == 200) {
-                    let data = await resp.json()
-                    cosole.log('login---------------')
-                    console.log(data)
+                if (resp.status == 400) {
+                    showError(data.error)
                 } else {
-                    console.log('err--------------')
+                    location.assign("/")
                 }
             } catch (err) {
-
                 console.log(err)
             }
         })
