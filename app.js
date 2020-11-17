@@ -11,7 +11,7 @@ const cookieParser = require('cookie-parser')
 
 //user defined route
 const authRouter = require('./routes/authRoute')
-const cookieRouter = require('./routes/cookieRoute')
+
 
 //dao service
 const daoService = require('./dao/daoservice')
@@ -47,4 +47,3 @@ app.get('/smoothies', (req, res) => {
 
 
 app.use(authRouter)
-app.use(cookieRouter)
