@@ -12,9 +12,8 @@ const cookieParser = require('cookie-parser')
 //user defined route
 const authRouter = require('./routes/authRoute')
 
+const { canActive, checkUser } = require('./middleware/authMiddleware')
 
-//dao service
-const daoService = require('./dao/daoservice')
 
 //creae express app
 const app = express()
@@ -22,6 +21,7 @@ const app = express()
 
 //middleware bodyparser
 // app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(bodyParser.json())
     //middleware static file 
 app.use(express.static("public"))
@@ -36,14 +36,11 @@ app.listen(3000, () => {
 
 
 /* actual logic*/
-
+app.get("*", checkUser)
 app.get('/', async(req, res) => {
     res.render('home')
 })
-
-app.get('/smoothies', (req, res) => {
+app.get('/smoothies', canActive, (req, res) => {
     res.render('smoothies')
 })
-
-
 app.use(authRouter)

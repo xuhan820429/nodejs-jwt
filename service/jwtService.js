@@ -22,12 +22,12 @@ class JWTService {
         })
     }
     verifyToken(token) {
-        let result = {}
+        let result = { decoded: null, error: null }
         try {
             var decoded = jwt.verify(token, this._secret);
-            result = { decoded }
+            result["decoded"] = decoded
         } catch (error) {
-            result = { error }
+            result["error"] = error
         }
         return result
     }
@@ -40,7 +40,16 @@ class JWTService {
     }
 
     getTokenFromCookie(req) {
-        return req.cookies['jwt']
+        if (req.cookies['jwt']) {
+            return req.cookies['jwt']
+        } else {
+            return null
+        }
+    }
+
+
+    removeTokenInCookie(res) {
+        res.clearCookie('jwt')
     }
 }
 
